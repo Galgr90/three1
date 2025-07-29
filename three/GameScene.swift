@@ -16,6 +16,7 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+    private var currentLevel: Level?
     
     override func sceneDidLoad() {
 
@@ -39,6 +40,14 @@ class GameScene: SKScene {
             spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
                                               SKAction.fadeOut(withDuration: 0.5),
                                               SKAction.removeFromParent()]))
+        }
+
+        // Example level generation for demonstration purposes
+        let generator = LevelGenerator()
+        self.currentLevel = generator.generate(goal: 10)
+        if let level = self.currentLevel {
+            print("Generated level with seed: \(level.seed)")
+            print(level.board.map { $0.map(String.init).joined(separator: " ") }.joined(separator: "\n"))
         }
     }
     
